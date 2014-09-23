@@ -1,12 +1,12 @@
 module MMA
 
-export std, var, dist, rms, angle
+export std_dev, variance, dist, rms, angle
 
-function std(x)
+function std_dev(x)
   return vecnorm(x - mean(x))/sqrt(length(x))
 end
 
-function var(x)
+function variance(x)
   return sum((x - mean(x)).^2)/length(x)
 end
 
