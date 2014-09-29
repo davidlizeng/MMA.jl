@@ -10,6 +10,7 @@ MMA.jl packages a few of the functions commonly used in the [EE 103](http://ee10
 - `dist(x, y)` computes the distance between vectors `x` and `y`
 - `rms(x)` computes the root mean square of the entries of `x`
 - `angle(x, y)` computes the angle between vectors `x` and `y`
+- `gram_schmidt(A)` runs the Gram-Schmidt algorithm for the set of column vectors `A`
 
 
 Julia already defines `std` and `var` functions, which are **not** the same as `std_dev` and `variance`. Make sure to **never** use `std` and `var` when coding in Julia for the course!
