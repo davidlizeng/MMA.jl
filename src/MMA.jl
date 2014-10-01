@@ -1,6 +1,6 @@
 module MMA
 
-export std_dev, variance, dist, rms, angle
+export std_dev, variance, dist, rms, angle, gram_schmidt
 
 function std_dev(x)
   return vecnorm(x - mean(x))/sqrt(length(x))
@@ -29,22 +29,19 @@ end
 # as a linear combination of the previous vectors
 #
 # parameters:
-#   a   - A cell array of column vectors vectors
-#   tol - Tolerance [optional]. Used to determine if a vector is "zero"
+#   a   - An array of column vectors 
 #
 # returns:
-#   If 'a' is a set of linearly independent vectors, then 
-#   gram_schmidt returns a set of orthonormal vectors
-#   represented by a cell array of column vectors.
+#   If 'a' is a set of n linearly independent vectors, then 
+#   gram_schmidt returns an array n of orthonormal vectors.
 #
 #   If 'a' is not a set of linearly independent vectors, then
-#   gram_schmidt returns the index of the first vector which
-#   can be expressed as a linear combination of the other
-#   vectors.
+#   gram_schmidt returns an array of m < n vectors.
 #
 # usage:
 #   julia> gram_schmidt({[1;0],[0;1][1;1]})
-#   2
+#   1-element Array{Any,1}:
+#   [1.0,0.0]
 #
 #   julia> gram_schmidt({[1;0;0],[0;1;0],[0;0;1]})
 #   3-element Array{Any,1}:
@@ -52,7 +49,8 @@ end
 #    [0.0,1.0,0.0]
 #    [0.0,0.0,1.0]
 #    
-function gram_schmidt(A; tol=1e-6)
+function gram_schmidt(A)
+  epsilon = 1e-6
   k = length(A)
   n = length(A[1])
   qs = {}
@@ -63,8 +61,8 @@ function gram_schmidt(A; tol=1e-6)
       q_i -= (qs[j]'A[i]).*qs[j]
     end
     # check for dependence, quit if q_i ~= 0
-    if norm(q_i) <= tol
-      return i
+    if norm(q_i) <= epsilon
+      break
     end
     # normalize and store the result
     q_i = q_i/norm(q_i)
