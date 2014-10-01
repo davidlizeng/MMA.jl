@@ -29,8 +29,7 @@ end
 # as a linear combination of the previous vectors
 #
 # parameters:
-#   a   - A cell array of column vectors vectors
-#   tol - Tolerance [optional]. Used to determine if a vector is "zero"
+#   a   - An array of column vectors 
 #
 # returns:
 #   If 'a' is a set of n linearly independent vectors, then 
