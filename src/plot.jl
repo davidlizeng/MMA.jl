@@ -66,10 +66,26 @@ function show_figure(; figure=nothing)
 end
 show_figure(figure) = show_figure(figure=figure)
 
-function save_figure(name, width, height; figure=nothing)
+function save_figure(name, width, height; format="svg", figure=nothing)
   figure = get_figure(figure)
   p = build_plot(figure)
-  draw(SVG(string(name, ".svg"), width, height), p)
+  if format == "svg"
+    draw(SVG(name, width, height), p)
+  elseif format == "pdf" || format == "ps" || format == "png"
+    if cairo_supported
+      if format == "pdf"
+        draw(PDF(name, width, height), p)
+      elseif format == "ps"
+        draw(PS(name, width, height), p)
+      else
+        draw(PNG(name, width, height), p)
+      end
+    else
+      error("The Cairo package needs to be installed to write images in pdf, ps, or png format.")
+    end
+  else
+    error("Unrecognized image format. Please use \"svg\" (default), \"png\", \"pdf\", or \"ps\".")
+  end
   return figure
 end
 
@@ -80,15 +96,14 @@ function generic_plot(x, y, geom, color_string, label, figure)
   append!(figure.layers, new_layer)
   push!(figure.colors, color_string)
   push!(figure.labels, label)
+  return nothing
 end
 
-function line_plot(x, y; color="#00BFFF", label="", figure=nothing)
-  generic_plot(x, y, Geom.path, color, label, figure)
-end
+line_plot(x, y; color="#00BFFF", label="", figure=nothing) =
+    generic_plot(x, y, Geom.path, color, label, figure)
 
-function scatter_plot(x, y; color="#00BFFF", label="", figure=nothing)
-  generic_plot(x, y, Geom.point, color, label, figure)
-end
+scatter_plot(x, y; color="#00BFFF", label="", figure=nothing) =
+    generic_plot(x, y, Geom.point, color, label, figure)
 
 function set_title(title::String; figure=nothing)
   figure = get_figure(figure)
