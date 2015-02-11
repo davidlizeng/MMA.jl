@@ -101,9 +101,13 @@ end
 
 line_plot(x, y; color="#00BFFF", label="", figure=nothing) =
     generic_plot(x, y, Geom.path, color, label, figure)
+line_plot(y; color="#00BFFF", label="", figure=nothing) =
+    generic_plot(1:length(y), y, Geom.path, color, label, figure)
 
 scatter_plot(x, y; color="#00BFFF", label="", figure=nothing) =
     generic_plot(x, y, Geom.point, color, label, figure)
+scatter_plot(y; color="#00BFFF", label="", figure=nothing) =
+    generic_plot(1:length(y), y, Geom.point, color, label, figure)
 
 function set_title(title::String; figure=nothing)
   figure = get_figure(figure)
