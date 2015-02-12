@@ -1,8 +1,8 @@
-using Gadfly
 module MMA
 
 include("math.jl")
 include("plot.jl")
+include("images.jl")
 
 function __init__()
   global cur_figure = nothing
