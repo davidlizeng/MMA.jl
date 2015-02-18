@@ -3,6 +3,15 @@ export line_plot, scatter_plot
 export new_figure, show_figure, save_figure
 export set_xlabel, set_ylabel, set_title, set_legend
 
+color_rotation = [
+  "blue",
+  "red",
+  "green",
+  "orange",
+  "purple",
+  "gold"
+];
+
 type Figure
   layers::Array{Gadfly.Layer, 1}
   colors::Array{String, 1}
@@ -66,7 +75,7 @@ function show_figure(; figure=nothing)
 end
 show_figure(figure) = show_figure(figure=figure)
 
-function save_figure(name, width, height; format="svg", figure=nothing)
+function save_figure(name; width=8inch, height=6inch, format="svg", figure=nothing)
   figure = get_figure(figure)
   p = build_plot(figure)
   if format == "svg"
@@ -91,6 +100,9 @@ end
 
 function generic_plot(x, y, geom, color_string, label, figure)
   figure = get_figure(figure)
+  if color_string == nothing
+    color_string = color_rotation[length(figure.layers) % length(color_rotation) + 1]
+  end
   theme = Theme(default_color = color(color_string))
   new_layer = Gadfly.layer(x=x, y=y, geom, theme)
   append!(figure.layers, new_layer)
@@ -99,14 +111,14 @@ function generic_plot(x, y, geom, color_string, label, figure)
   return nothing
 end
 
-line_plot(x, y; color="#00BFFF", label="", figure=nothing) =
+line_plot(x, y; color=nothing, label="", figure=nothing) =
     generic_plot(x, y, Geom.path, color, label, figure)
-line_plot(y; color="#00BFFF", label="", figure=nothing) =
+line_plot(y; color=nothing, label="", figure=nothing) =
     generic_plot(1:length(y), y, Geom.path, color, label, figure)
 
-scatter_plot(x, y; color="#00BFFF", label="", figure=nothing) =
+scatter_plot(x, y; color=nothing, label="", figure=nothing) =
     generic_plot(x, y, Geom.point, color, label, figure)
-scatter_plot(y; color="#00BFFF", label="", figure=nothing) =
+scatter_plot(y; color=nothing, label="", figure=nothing) =
     generic_plot(1:length(y), y, Geom.point, color, label, figure)
 
 function set_title(title::String; figure=nothing)
