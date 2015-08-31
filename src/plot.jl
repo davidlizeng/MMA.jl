@@ -1,20 +1,24 @@
 using Gadfly
+using Colors
 export line_plot, scatter_plot
 export new_figure, show_figure, save_figure
 export set_xlabel, set_ylabel, set_title, set_legend
 
+global cur_figure = nothing
+global cairo_supported = Pkg.installed("Cairo") != nothing
+
 color_rotation = [
-  "blue",
-  "red",
-  "green",
-  "orange",
-  "purple",
-  "gold"
+  colorant"blue",
+  colorant"red",
+  colorant"green",
+  colorant"orange",
+  colorant"purple",
+  colorant"gold"
 ];
 
 type Figure
   layers::Array{Gadfly.Layer, 1}
-  colors::Array{String, 1}
+  colors::Array{RGB{U8}, 1}
   labels::Array{String, 1}
   title::String
   xlabel::String
