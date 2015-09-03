@@ -51,7 +51,7 @@ function gram_schmidt(A)
   epsilon = 1e-6
   k = length(A)
   n = length(A[1])
-  qs = {}
+  qs = []
   for i = 1:k
     q_i = A[i]
     # orthogonalization with previous vectors
