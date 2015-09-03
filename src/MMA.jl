@@ -5,8 +5,11 @@ include("math.jl")
 
 mma_plot_path = abspath("plot.jl")
 println(mma_plot_path);
-mma_image_path = abspath("image.jl")
-println(mma_plot_image);
+include("image.jl")
+println("done load");
+
+#mma_image_path = abspath("image.jl")
+#println(mma_image_path);
 
 function __init__()
 	println("loaded MMA")
