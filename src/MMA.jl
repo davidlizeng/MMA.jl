@@ -1,6 +1,10 @@
 module MMA
 export MMA_load_plotting, MMA_load_images
 
+for x in LOAD_PATH
+	println(x);
+end
+
 include("math.jl")
 
 mma_plot_path = abspath("plot.jl")
