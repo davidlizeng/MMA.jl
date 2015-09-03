@@ -4,7 +4,9 @@ export MMA_load_plotting, MMA_load_images
 include("math.jl")
 
 mma_plot_path = abspath("plot.jl")
-mma_image_path = abspath("plot.jl")
+println(mma_plot_path);
+mma_image_path = abspath("image.jl")
+println(mma_plot_image);
 
 function __init__()
 	println("loaded MMA")
