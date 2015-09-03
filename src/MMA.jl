@@ -5,7 +5,7 @@ include("math.jl")
 
 mma_plot_path = abspath("plot.jl")
 println(mma_plot_path);
-include("image.jl")
+include("plot.jl")
 println("done load");
 
 #mma_image_path = abspath("image.jl")
